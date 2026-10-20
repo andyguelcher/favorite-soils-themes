@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <!-- The site is already dark; this asks the Dark Reader extension not to recolour it, so soil colours stay true. -->
+  <meta name="darkreader-lock">
+  <title>Timeline editor | Favorite Soils Report</title>
+  <meta name="description" content="Build the stages played by Play its history on each soil's 3D model.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Young+Serif&display=swap">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <!-- You do not need to edit this file. It edits content/<member>/history.txt for you. See README.md. -->
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <a class="site" href="index.html">Favorite Soils Report <span>ENSC 245</span></a>
+    <nav aria-label="Site">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="soil-1.html">Soil 1</a></li>
+        <li><a href="soil-2.html">Soil 2</a></li>
+        <li><a href="soil-3.html">Soil 3</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="editor">
+    <div class="opener">
+      <h1>Timeline editor</h1>
+      <p class="lede">Build the stages that "Play its history" shows on a soil's 3D model. Nothing here changes your site until you paste the result into that soil's <code>history.txt</code>.</p>
+    </div>
+
+    <section>
+      <h2>1. Choose a soil</h2>
+      <div class="soil-picker" data-picker role="group" aria-label="Soils"></div>
+      <p class="notes" data-picked></p>
+    </section>
+
+    <section data-stages-section hidden>
+      <h2>2. Edit the stages</h2>
+      <p>Stages play in order, top to bottom. For each one, write what happened, then click the horizons in its soil column to show what the model should look like at that point. Each click moves a horizon to the next step:</p>
+      <ul class="state-key">
+        <li><span class="key-chip is-0"></span><span><b>Not there yet</b>: hidden in the model.</span></li>
+        <li><span class="key-chip is-1"></span><span><b>Laid down</b>: appears as raw, pale parent material.</span></li>
+        <li><span class="key-chip is-2"></span><span><b>Starts forming</b>: partly turned into the horizon it is today.</span></li>
+        <li><span class="key-chip is-3"></span><span><b>Finished</b>: looks as it does today.</span></li>
+      </ul>
+      <p class="notes">A horizon can only move forward in time: making it later in one stage updates the stages around it to match. The last stage always shows the soil as it is today.</p>
+      <ol class="stage-list" data-stages></ol>
+      <button type="button" class="tool" data-add>Add a stage at the end</button>
+    </section>
+
+    <section data-save-section hidden>
+      <h2>3. Preview and save</h2>
+      <ol class="save-steps">
+        <li><button type="button" class="tool" data-preview>Preview on the 3D model</button> opens this soil's page with your draft, so you can press "Play its history" and watch it.</li>
+        <li><button type="button" class="tool" data-copy>Copy the text</button> <span class="notes" data-copied aria-live="polite"></span></li>
+        <li><a class="tool" data-github target="_blank" rel="noopener">Open this soil's history.txt on GitHub</a><span data-github-help>Open <code data-path></code> on GitHub and click the pencil</span>. Select everything in the file, paste, and click <b>Commit changes</b>. The site updates in about a minute.</li>
+      </ol>
+      <details class="raw-text">
+        <summary>See the text that will be saved</summary>
+        <textarea data-output readonly rows="14" aria-label="history.txt text"></textarea>
+      </details>
+      <p class="notes" data-draft-note></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Favorite Soils Report 2, ENSC 245. Soil data from USDA-NRCS Official Series Descriptions and UC Davis SoilWeb unless noted.
+  </footer>
+  <noscript><p style="padding:1rem">This page needs JavaScript turned on.</p></noscript>
+  <script src="js/site.js"></script>
+  <script src="js/theme.js"></script>
+  <script type="module" src="js/history-editor.js"></script>
+</body>
+</html>

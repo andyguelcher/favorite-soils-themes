@@ -27,7 +27,7 @@ Decide who is which member. Stay inside your own folder and you can't break anyo
 |`blog-1.md`|Blog post 1: plant-available water.|
 |`blog-2.md`|Blog post 2: annual water budget.|
 |`osd.txt`|Optional. Your soil's official series description, pasted in. It makes the 3D model look like the description.|
-|`history.txt`|Optional. The stages of how your soil formed, played by "Play its history" on your 3D model.|
+|`history.txt`|Optional. The stages of how your soil formed, played by "Play its history" on your 3D model. Easiest to make with the **Timeline editor** (link at the bottom of every page).|
 
 ## The group's files
 
@@ -92,9 +92,50 @@ For a mixed horizon such as E/B, label each part in the same cell: `E: 5YR 4/4 B
 
 Anything that isn't a horizon paragraph is ignored, so you can't break it.
 
-## Filling in history.txt (optional)
+## Play its history: making your soil's timeline (optional)
 
-Each stage of how your soil formed is a few labelled lines; the file explains them and has an example. Check every date and fact against a real source and cite it in your Sources. If you use an AI assistant to help research or draft it, say so in your Sources too.
+"Play its history" rebuilds your soil on the 3D model, one stage at a time, with a caption for each stage. You choose how many stages there are, what each one says, and what the model shows at each one. The button appears once your `history.txt` has at least one stage.
+
+### The easy way: the timeline editor
+
+1. Fill in your `soil.txt` first; the editor uses your horizons.
+2. On your site, click **Timeline editor** at the bottom of any page.
+3. Choose your soil. Any stages you've already saved are loaded.
+4. For each stage, fill in:
+   - **Stage title**, a short heading such as "The glacier lays down till".
+   - **When**, in words, such as "about 17,500 years ago".
+   - **Years ago (optional)**, as a number. It's kept for reference; stages always play in the order they're listed.
+   - **What happened**, a sentence or two in your own words.
+   - **Source**, where the facts came from. Cite it fully in Sources on your soil page too.
+5. Click the horizons in each stage's soil column to set what the model shows. Each click moves a horizon one step on:
+   - **Not there yet**: hidden in the model.
+   - **Laid down**: appears as raw, pale parent material.
+   - **Starts forming**: partly turned into the horizon it is today.
+   - **Finished**: looks as it does today.
+
+   Horizons only move forward in time, so changing one stage adjusts the stages around it to match. The last stage always shows the soil as it is today.
+6. Use **Add a stage**, **Move up**, **Move down** and **Delete** to build the list.
+7. Click **Preview on the 3D model** to open your soil page with your draft and press "Play its history" to watch it. Your draft is kept in your browser until you save it.
+8. To save: click **Copy the text**, open your `history.txt` on GitHub (the editor links to it), click the pencil, select everything in the file, paste, and click **Commit changes**.
+
+### Or edit history.txt directly
+
+Each stage is a few labelled lines, starting with `Stage:`. The file explains each label and has an example.
+
+|Line|What it does in the model|
+|-|-|
+|`Stage:`|Starts a new stage and gives its title.|
+|`When:`|The date shown above the caption.|
+|`Age:`|Years ago, as a number (optional).|
+|`Deposit:`|Horizons that appear at this stage, as raw material.|
+|`Develop:`|Horizons that start turning into their present look.|
+|`Finish:`|Horizons that reach how they look today (`all` for every horizon).|
+|`Text:`|The caption.|
+|`Source:`|Shown under the caption.|
+
+A horizon that is never in a `Deposit:` line is there from the first stage.
+
+Whichever way you use, check every date and fact against a real source and cite it in your Sources. If you used an AI assistant to help research or write it, say so in your Sources too.
 
 ## Formatting cheat sheet
 

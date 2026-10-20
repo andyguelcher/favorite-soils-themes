@@ -297,6 +297,52 @@ details.history-list ol { padding-left: 1.3rem; margin: 0.6rem 0 0; }
 details.history-list li { margin-bottom: 0.6rem; line-height: 1.5; }
 details.history-list small { color: var(--ink-soft); }
 
+/* ---------- the timeline editor (history-editor.html) ---------- */
+.tool {
+  display: inline-block; font-family: var(--label); font-size: 0.8125rem; font-weight: 600; color: var(--ink); text-decoration: none;
+  background: var(--sheet); border: 1.5px solid var(--line); border-radius: 3px; padding: 0.4rem 0.85rem; cursor: pointer;
+}
+.tool:hover:not(:disabled) { background: var(--water-wash); color: var(--ink); }
+.tool[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+.tool:disabled { opacity: 0.45; cursor: default; }
+.tool.small { font-size: 0.75rem; padding: 0.25rem 0.6rem; }
+.tool[hidden], [data-github-help][hidden] { display: none; }
+.editor code { font-family: var(--data); font-size: 0.875em; }
+.soil-picker { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem; }
+.state-key { list-style: none; padding: 0; margin: 0 0 0.8rem; font-family: var(--label); font-size: 0.875rem; display: grid; gap: 0.35rem; }
+.state-key li { display: flex; align-items: center; gap: 0.5rem; }
+.key-chip { width: 2.4rem; height: 1rem; border: 1px solid var(--line); flex: none; --hz: #745c3c; }
+.stage-list { list-style: none; padding: 0; margin: 1rem 0; }
+.stage-card { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 1.25rem; padding: 1.1rem 0; border-top: 1px solid var(--rule); }
+.mini-column { display: flex; flex-direction: column; height: 17rem; border: 1.5px solid var(--line); background: var(--sheet); align-self: start; }
+.mini-hz {
+  flex: 1 1 0; min-height: 1.15rem; border: 0; border-top: 1px solid rgba(255, 255, 255, 0.25); margin: 0; padding: 0;
+  font-family: var(--data); font-size: 0.6875rem; font-weight: 500; color: #f4efe6; cursor: pointer; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.mini-hz:first-child { border-top: 0; }
+.mini-hz:hover:not(:disabled) { outline: 2px solid var(--water); outline-offset: -2px; }
+.mini-hz:disabled { cursor: default; }
+/* not there yet, laid down (raw), starts forming, finished */
+.is-0 { background: repeating-linear-gradient(-45deg, transparent 0 6px, var(--hatch) 6px 7px); color: var(--ink-soft); text-shadow: none; }
+.is-1 { background: color-mix(in srgb, var(--hz) 45%, #c9c2b6); }
+.is-2 { background: repeating-linear-gradient(135deg, var(--hz) 0 7px, color-mix(in srgb, var(--hz) 45%, #c9c2b6) 7px 14px); }
+.is-3 { background: var(--hz); }
+.stage-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem 1rem; align-content: start; }
+.stage-number { grid-column: 1 / -1; margin: 0; font-family: var(--data); font-size: 0.8125rem; color: var(--water); }
+.field { display: grid; gap: 0.25rem; font-family: var(--label); font-size: 0.8125rem; font-weight: 600; color: var(--ink-soft); }
+.field.wide { grid-column: 1 / -1; }
+.field small { font-weight: 400; }
+.field input, .field textarea, .raw-text textarea {
+  font: 400 0.9375rem var(--read); color: var(--ink); background: var(--sheet);
+  border: 1.5px solid var(--line); border-radius: 3px; padding: 0.45rem 0.6rem; width: 100%;
+}
+.field input:focus, .field textarea:focus { outline: 2px solid var(--water); outline-offset: 1px; }
+.stage-tools { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.save-steps { padding-left: 1.3rem; max-width: var(--measure); font-family: var(--label); font-size: 0.9375rem; }
+.save-steps li { margin-bottom: 0.8rem; }
+.raw-text summary { cursor: pointer; font-family: var(--label); font-weight: 600; color: var(--water); }
+.raw-text textarea { font-family: var(--data); font-size: 0.8125rem; margin-top: 0.5rem; }
+
 /* ---------- small screens ---------- */
 @media (max-width: 760px) {
   body { font-size: 1rem; }
@@ -321,6 +367,8 @@ details.history-list small { color: var(--ink-soft); }
   .monolith .stage { height: min(58vh, 30rem); }
   .monolith .card { grid-column: 1; grid-row: auto; }
   .monolith .history { grid-column: 1; grid-row: auto; }
+  .stage-card { grid-template-columns: 4.8rem minmax(0, 1fr); gap: 0.8rem; }
+  .stage-fields { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {

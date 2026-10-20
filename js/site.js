@@ -83,6 +83,7 @@
     return "rgb(" + rgb.join(", ") + ")";
   }
   window.soilColor = soilColor;
+  window.parseSoil = parseSoil;   // also used by the timeline editor
 
   function depthOf(soil) {
     var h = soil.horizons;

@@ -1392,13 +1392,25 @@ pageReady().then(async (page) => {
     .catch(() => "");
   const osd = parseOSD(osdText);
   // The optional history.txt: the stages played by "Play its history".
-  const historyText = await fetch("content/" + folder + "/history.txt", { cache: "no-cache" })
+  // ?draft=history previews an unsaved timeline from the timeline editor (history-editor.html).
+  let draft = null;
+  if (new URLSearchParams(location.search).get("draft") === "history") {
+    try { draft = localStorage.getItem("history-draft:" + folder); } catch (e) { /* storage unavailable */ }
+  }
+  const historyText = draft !== null ? draft : await fetch("content/" + folder + "/history.txt", { cache: "no-cache" })
     .then((r) => (r.ok ? r.text() : ""))
     .catch(() => "");
   const history = parseHistory(historyText);
   const table = readTable();
   const section = buildSection(soil, table, soil.horizons.some((hz) => osdFor(osd, hz.name)), history);
   fillCard(section.querySelector("[data-card]"), soil, table, osd, null);
+  if (draft !== null) {
+    const note = document.createElement("div");
+    note.className = "todo";
+    note.innerHTML = "<p><strong>Previewing your draft.</strong> This is the unsaved timeline from the timeline editor. " +
+      "It isn't on your site until you paste it into your <code>history.txt</code>. Press \u201cPlay its history\u201d to watch it.</p>";
+    section.querySelector("h2").after(note);
+  }
 
   // Fetch Three.js only when the model is about to scroll into view.
   const watch = new IntersectionObserver((entries) => {
@@ -1413,3 +1425,6 @@ pageReady().then(async (page) => {
   }, { rootMargin: "300px 0px" });
   watch.observe(section);
 });
+
+// Shared with the timeline editor (history-editor.html).
+export { parseHistory };
