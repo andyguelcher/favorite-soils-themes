@@ -1,0 +1,18 @@
+Optional. The stages of how your soil formed, played by the "Play its history" button on your 3D model. Leave this file without any stages and the button does not appear.
+
+Each stage starts with a line beginning "Stage:". Use the same horizon names as your soil.txt.
+- When: when it happened, in words.
+- Age: about how many years ago, as a number (used to order the timeline).
+- Deposit: horizons laid down at this stage.
+- Develop: horizons that start to form.
+- Finish: horizons that reach how they look today ("all" means every horizon).
+- Text: what happened, in a sentence or two.
+- Source: where the facts come from. Check every date and fact against its source, and cite it in Sources on your page.
+
+An example stage, shown here with # in front so the site ignores it. Remove the # signs to use it:
+# Stage: The glacier lays down till
+# When: about 17,500 years ago
+# Age: 17500
+# Deposit: 2C, 2Cd
+# Text: The ice sheet spreads clay loam till across the area.
+# Source: Official Series Description

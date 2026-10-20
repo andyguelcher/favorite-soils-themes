@@ -1,0 +1,4 @@
+Optional. Paste the horizon paragraphs from the TYPICAL PEDON part of your soil's Official Series Description here, one paragraph per horizon. The 3D model uses them for structure, mottles, roots and boundaries. Lines that are not horizon paragraphs, like this one, are ignored.
+
+Each paragraph starts with the horizon name, two dashes and its depth, for example:
+Example: Ap--0 to 23 cm; black (10YR 2/1) fine sandy loam, dark gray (10YR 4/1) dry; weak coarse subangular blocky structure; ...

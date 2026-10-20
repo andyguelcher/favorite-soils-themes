@@ -1,0 +1,17 @@
+Choose how your site looks. Change the words after each colon below and commit; the site updates in about a minute.
+
+Theme: lakebed
+Accent:
+Headings:
+Body:
+Title:
+Headline:
+Subheading:
+
+How to fill these in:
+- For Theme, pick one of: lakebed (dark, blue), prairie (light, green), volcanic (dark, ember orange), desert (light, red rock).
+- For Accent, give any Munsell colour such as 2.5YR 4/6, a colour name such as teal, or a #hex code. Leave it blank to use the theme's own. If it would be hard to read, the site adjusts it.
+- For Headings and Body, pick a font: Young Serif, Fraunces, Playfair Display, DM Serif Display, Bitter, Space Grotesk, Source Serif 4, Lora, Inter, Public Sans, Work Sans, Libre Franklin. Leave blank for the theme's own.
+- For Title, write your group's name for the site. It shows at the top of every page.
+- For Headline, write the big heading on your home page, for example: Three soils, and where their *water* goes. Put *stars* around a word to show it in your accent colour. Leave it blank for no heading.
+- For Subheading, write a sentence to go under it, or leave it blank.

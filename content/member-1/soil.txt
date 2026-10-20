@@ -1,0 +1,6 @@
+Series:
+Name:
+Subgroup:
+Summary:
+
+Horizons (name, top in cm, bottom in cm, moist color)

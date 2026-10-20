@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <!-- The site is already dark; this asks the Dark Reader extension not to recolour it, so soil colours stay true. -->
+  <meta name="darkreader-lock">
+  <title>Favorite Soils Report</title>
+  <meta name="description" content="A group field guide to three favorite soils and their water, for ENSC 245.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Young+Serif&display=swap">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <!-- You do not need to edit this file. The writing lives in the "content" folder. See README.md. -->
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <a class="site" href="index.html">Favorite Soils Report <span>ENSC 245</span></a>
+    <nav aria-label="Site">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="soil-1.html">Soil 1</a></li>
+        <li><a href="soil-2.html">Soil 2</a></li>
+        <li><a href="soil-3.html" aria-current="page">Soil 3</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" data-person="member-3">
+    <div class="opener">
+      <h1 data-title>&nbsp;</h1>
+      <p class="lede" data-lede>&nbsp;</p>
+    </div>
+
+    <div class="soil">
+      <aside class="rail" aria-label="Soil profile">
+        <figure>
+          <div class="wrap" data-core></div>
+          <div class="readout" data-readout aria-live="polite"></div>
+          <figcaption>Profile to scale, depths in cm. Colours are screen approximations of the moist Munsell colours.</figcaption>
+        </figure>
+      </aside>
+
+      <div class="column">
+        <div data-body></div>
+        <nav class="pager" aria-label="Soil pages">
+          <a href="soil-2.html">Previous soil</a>
+          <a href="blog.html">On to the blog</a>
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Favorite Soils Report 2, ENSC 245. Soil data from USDA-NRCS Official Series Descriptions and UC Davis SoilWeb unless noted.
+  </footer>
+  <noscript><p style="padding:1rem">This site needs JavaScript turned on to show its content.</p></noscript>
+  <script src="js/site.js"></script>
+  <script src="js/theme.js"></script>
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
+  <script type="module" src="js/soil3d.js"></script>
+</body>
+</html>
