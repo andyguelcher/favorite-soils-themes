@@ -4,7 +4,7 @@
    history.txt, lets you edit the stages with forms and clickable soil
    columns, and writes the history.txt text for you to paste in.
 ------------------------------------------------------------------- */
-import { parseHistory } from "./soil3d.js";
+import { parseHistory } from "./soil3d.js?v=4";   // keep ?v= in step with the pages' script links
 
 const MEMBERS = ["member-1", "member-2", "member-3"];
 const PAGES = { "member-1": "soil-1.html", "member-2": "soil-2.html", "member-3": "soil-3.html" };
