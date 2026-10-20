@@ -1341,6 +1341,11 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
     historyBtn.setAttribute("aria-pressed", "false");
     historyBtn.addEventListener("click", () => (historyOn ? exitHistory() : enterHistory()));
     section.querySelector(".bar").prepend(historyBtn);
+    const edit = document.createElement("a");
+    edit.className = "edit-timeline";
+    edit.href = section.dataset.editor;
+    edit.textContent = "Edit this timeline";
+    historyBtn.after(edit);
   }
   const spinBtn = section.querySelector("[data-spin]");
   explodeBtn.addEventListener("click", () => {
@@ -1403,6 +1408,17 @@ pageReady().then(async (page) => {
   const history = parseHistory(historyText);
   const table = readTable();
   const section = buildSection(soil, table, soil.horizons.some((hz) => osdFor(osd, hz.name)), history);
+  const editorLink = "history-editor.html?member=" + encodeURIComponent(folder);
+  if (!history.length) {
+    // No timeline yet: point the group to the editor, so they know "Play its history" exists.
+    const todo = document.createElement("div");
+    todo.className = "todo";
+    todo.innerHTML = '<p><strong>Still to do.</strong> Make this soil\'s timeline for \u201cPlay its history\u201d, ' +
+      'which rebuilds the soil stage by stage on the model. Use the <a href="' + editorLink + '">Timeline editor</a>; ' +
+      "no code needed. (Optional.)</p>";
+    section.querySelector("h2").after(todo);
+  }
+  section.dataset.editor = editorLink;
   fillCard(section.querySelector("[data-card]"), soil, table, osd, null);
   if (draft !== null) {
     const note = document.createElement("div");

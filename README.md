@@ -99,7 +99,7 @@ Anything that isn't a horizon paragraph is ignored, so you can't break it.
 ### The easy way: the timeline editor
 
 1. Fill in your `soil.txt` first; the editor uses your horizons.
-2. On your site, click **Timeline editor** at the bottom of any page.
+2. Open the editor: on your soil page, click the **Timeline editor** link in the "Still to do" box under the 3D model (or **Edit this timeline** next to "Play its history" once you have one). It's also linked at the bottom of every page.
 3. Choose your soil. Any stages you've already saved are loaded.
 4. For each stage, fill in:
    - **Stage title**, a short heading such as "The glacier lays down till".

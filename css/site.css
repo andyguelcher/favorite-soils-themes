@@ -248,6 +248,8 @@ article.post .by { font-family: var(--label); font-size: 0.8125rem; color: var(-
 .monolith .bar button:hover { background: var(--water-wash); }
 .monolith .bar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
 .monolith .bar button[hidden] { display: none; }
+.monolith .bar .edit-timeline { align-self: center; font-family: var(--label); font-size: 0.8125rem; margin-right: 0.4rem; }
+.monolith-section > .todo { margin-top: 0.4rem; }
 .monolith:not(:has(canvas)) .bar { visibility: hidden; }
 .monolith .card { grid-column: 2; grid-row: 1 / span 2; border-top: 3px solid var(--line); padding-top: 0.8rem; font-family: var(--data); font-size: 0.8125rem; line-height: 1.5; }
 .monolith .card h3 { font-family: var(--data); font-weight: 500; font-size: 1.5rem; margin-bottom: 0.8rem; }
