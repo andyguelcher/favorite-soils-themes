@@ -1,6 +1,11 @@
-Series:
-Name:
-Subgroup:
-Summary:
+Series: Scobey
+Name: Sample data (replace with your name)
+Subgroup: Aridic Argiustolls
+Summary: SAMPLE DATA for trying the site: Montana's state soil, a well-drained Mollisol of clay loam glacial till on the plains of northern Montana. Replace this file with your own soil.
 
 Horizons (name, top in cm, bottom in cm, moist color)
+Ap, 0, 15, 10YR 3/2
+Bt, 15, 30, 10YR 4/3
+Bk1, 30, 48, 2.5Y 4/2
+Bk2, 48, 107, 2.5Y 4/2
+Bky, 107, 152, 2.5Y 4/2

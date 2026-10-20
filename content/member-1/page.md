@@ -1,10 +1,27 @@
+TO DO: This page is sample data (the Scobey series, Montana's state soil) so you can try the site, the 3D model and the timeline editor. Replace soil.txt, page.md, osd.txt and history.txt in this folder with your own soil when you're ready.
+
 ## Classification
 
-TO DO: Replace this line with a table of your soil's series, order, suborder, great group, subgroup and family. The README shows how to type a table.
+| Level | Name |
+| --- | --- |
+| Series | Scobey |
+| Order | Mollisols |
+| Suborder | Ustolls |
+| Great group | Argiustolls |
+| Subgroup | Aridic Argiustolls |
+| Family | Fine, smectitic, frigid Aridic Argiustolls |
 
 ## DRoCTS+ table
 
-TO DO: Type your DRoCTS+ table here as a table with the columns Horizon, Depth, Rocks (%), Color (moist), Texture, Structure, HCl and pH, one row per horizon, using the same horizon names as your soil.txt. A typed table lets the 3D model draw your soil's structure, texture and rocks. You can also add a picture of your table with a picture line.
+| Horizon | Depth (in) | Rocks (%) | Color (moist) | Texture | Structure | HCl | pH |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Ap | 0-6 | 5 | 10YR 3/2 | cl | gr | ne | 6.8 |
+| Bt | 6-12 | 5 | 10YR 4/3 | c | pr/abk | ne | 7.0 |
+| Bk1 | 12-19 | 5 | 2.5Y 4/2 | cl | pr/sbk | st | 7.8 |
+| Bk2 | 19-42 | 5 | 2.5Y 4/2 | cl | pr/sbk | ve | 8.4 |
+| Bky | 42-60 | 5 | 2.5Y 4/2 | cl | pl | st | 8.2 |
+
+Texture: cl, clay loam; c, clay. Structure: gr, granular; pr, prismatic; abk, angular blocky; sbk, subangular blocky; pl, platy. HCl: ne, non-effervescent; st, strongly effervescent; ve, violently effervescent.
 
 ## A groupmate's table, scored
 
@@ -24,4 +41,4 @@ TO DO: The group picks one: plant-available water, physical properties and water
 
 ## Sources
 
-TO DO: List a citation for every picture and data source on this page, with the date you accessed it.
+- Soil Survey Staff, USDA-NRCS. Official Soil Series Descriptions: Scobey series. https://soilseries.sc.egov.usda.gov/OSD_Docs/S/SCOBEY.html. Accessed 20 Oct. 2026.

@@ -1,18 +1,31 @@
-Optional. The stages of how your soil formed, played by the "Play its history" button on your 3D model. Leave this file without any stages and the button does not appear.
+SAMPLE DATA: a sample timeline for the Scobey series, so you can try "Play its history" and the timeline editor. Replace it with your own soil's stages. Each stage starts with "Stage:"; the README explains every line.
 
-Each stage starts with a line beginning "Stage:". Use the same horizon names as your soil.txt.
-- When: when it happened, in words.
-- Age: about how many years ago, as a number (used to order the timeline).
-- Deposit: horizons laid down at this stage.
-- Develop: horizons that start to form.
-- Finish: horizons that reach how they look today ("all" means every horizon).
-- Text: what happened, in a sentence or two.
-- Source: where the facts come from. Check every date and fact against its source, and cite it in Sources on your page.
+Stage: An ice sheet leaves till
+When: during the last glaciation
+Deposit: Ap, Bt, Bk1, Bk2, Bky
+Text: A continental ice sheet spreads clay loam till across the plains of northern Montana. That till is the parent material of every horizon in this soil.
+Source: Scobey OSD
 
-An example stage, shown here with # in front so the site ignores it. Remove the # signs to use it:
-# Stage: The glacier lays down till
-# When: about 17,500 years ago
-# Age: 17500
-# Deposit: 2C, 2Cd
-# Text: The ice sheet spreads clay loam till across the area.
-# Source: Official Series Description
+Stage: Grassland builds a dark topsoil
+When: after the ice melts
+Develop: Ap
+Text: Bluebunch wheatgrass, western wheatgrass and needlegrasses root into the till, and their roots darken the top of the soil with organic matter.
+Source: Scobey OSD
+
+Stage: Clay moves down
+When: over thousands of years
+Develop: Bt
+Text: Water seeping down carries fine clay out of the topsoil and leaves it as clay films on the faces of peds in the Bt horizon.
+Source: Scobey OSD
+
+Stage: Lime and gypsum gather below
+When: over thousands of years, still going on
+Finish: Bt, Bk1, Bk2, Bky
+Text: With only about 12 inches of precipitation a year, water dissolves lime and gypsum near the surface but soaks only so far, leaving masses of lime in the Bk horizons and gypsum in the Bky.
+Source: Scobey OSD
+
+Stage: Plowed for dryland crops
+When: today
+Finish: all
+Text: Cultivation mixes the top 6 inches into an Ap horizon. Scobey soils are used mainly for dryland crops, with some rangeland.
+Source: Scobey OSD

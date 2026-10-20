@@ -1,4 +1,13 @@
-Optional. Paste the horizon paragraphs from the TYPICAL PEDON part of your soil's Official Series Description here, one paragraph per horizon. The 3D model uses them for structure, mottles, roots and boundaries. Lines that are not horizon paragraphs, like this one, are ignored.
+SAMPLE DATA: the TYPICAL PEDON of the Scobey series, pasted from its Official Series Description. Replace it with your own soil's.
 
-Each paragraph starts with the horizon name, two dashes and its depth, for example:
-Example: Ap--0 to 23 cm; black (10YR 2/1) fine sandy loam, dark gray (10YR 4/1) dry; weak coarse subangular blocky structure; ...
+Source: Soil Survey Staff, USDA-NRCS. Official Series Description, SCOBEY series. https://soilseries.sc.egov.usda.gov/OSD_Docs/S/SCOBEY.html
+
+Ap--0 to 6 inches; grayish brown (10YR 5/2) clay loam, very dark grayish brown (10YR 3/2) moist; strong fine granular structure; hard, friable, sticky and plastic; many fine roots; 5 percent pebbles; neutral (pH 6.8); clear wavy boundary. (5 to 8 inches thick, uncultivated areas have an A horizon 2 or 3 inches thick.)
+
+Bt--6 to 12 inches; brown (10YR 5/3) clay, dark brown (10YR 4/3) moist; strong fine and medium prismatic structure parting to strong fine angular blocky; hard, friable, sticky and plastic; many fine roots; many fine and very fine tubular pores; continuous faint dark grayish brown (10YR 4/2) clay films on faces of peds; 5 percent pebbles; neutral (pH 7.0); clear wavy boundary. (5 to 12 inches thick)
+
+Bk1--12 to 19 inches; grayish brown (2.5Y 5/2) clay loam, dark grayish brown (2.5Y 4/2) moist; strong medium prismatic structure parting to strong fine subangular blocky; very hard, friable, sticky and plastic; common fine roots; many fine and very fine tubular pores; common faint clay films on vertical faces of peds; 5 percent pebbles; few fine masses of lime; strongly effervescent; slightly alkaline (pH 7.8); gradual wavy boundary. (3 to 12 inches thick)
+
+Bk2--19 to 42 inches; light brownish gray (2.5Y 6/2) clay loam, dark grayish brown (2.5Y 4/2) moist; weak coarse and very coarse prismatic structure parting to weak medium subangular blocky; very hard, firm, sticky and plastic; few fine and very fine roots; common fine and very fine pores; 5 percent pebbles; many fine masses of lime; violently effervescent; moderately alkaline (pH 8.4); gradual wavy boundary. (20 to 30 inches thick)
+
+Bky--42 to 60 inches; grayish brown (2.5Y 5/2) clay loam, dark grayish brown (2.5Y 4/2) moist; weak thick platy structure; very hard, firm, sticky and plastic; 5 percent pebbles; common fine masses of lime; common fine masses of gypsum; strongly effervescent; moderately alkaline (pH 8.2).
