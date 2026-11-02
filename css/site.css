@@ -143,9 +143,12 @@ section > h2 { margin-bottom: 1.1rem; padding-top: 1.1rem; border-top: 3px solid
 .cores .scale span:last-child { transform: translateY(-100%); }
 .cores .scale span:last-child::after { top: 100%; }
 .cores { --core-h: clamp(20rem, 52vw, 30rem); }
-.cores a.col { display: grid; grid-template-rows: var(--core-h) auto; color: inherit; text-decoration: none; }
-.cores a.col .core { height: var(--core-h); transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1); }
-.cores a.col:hover .core { transform: translateY(-6px); box-shadow: 0 14px 22px -12px rgba(30, 26, 22, 0.55); }
+.cores a.col { position: relative; display: grid; grid-template-rows: var(--core-h) auto; color: inherit; text-decoration: none; }
+/* the hover shadow sits on its own layer and fades, so lifting a column never repaints a shadow */
+.cores a.col::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: var(--core-h); box-shadow: 0 14px 22px -12px rgba(0, 0, 0, 0.6); opacity: 0; transform: translateY(0); transition: opacity 240ms ease-out, transform 240ms cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
+.cores a.col:hover::before { opacity: 1; transform: translateY(-6px); }
+.cores a.col .core { position: relative; height: var(--core-h); transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1); }
+.cores a.col:hover .core { transform: translateY(-6px); }
 .cores a.col .hz { cursor: inherit; }
 .cores .cap { padding-top: 0.8rem; font-family: var(--label); font-size: 0.875rem; line-height: 1.35; color: var(--ink-soft); }
 .cores .cap strong { display: block; font-family: var(--display); font-weight: 400; font-size: 1.35rem; color: var(--ink); line-height: 1.15; }
@@ -155,7 +158,7 @@ section > h2 { margin-bottom: 1.1rem; padding-top: 1.1rem; border-top: 3px solid
 .soil { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
 .rail { position: sticky; top: 4.25rem; padding-top: 1rem; }
 .rail .wrap { display: grid; grid-template-columns: 1fr 2.6rem; height: min(72vh, 34rem); }
-.rail .core { height: 100%; animation: drill 900ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.rail .core { height: 100%; animation: drill 520ms cubic-bezier(0.16, 1, 0.3, 1) both; }
 .rail .ticks { position: relative; font-family: var(--data); font-size: 0.6875rem; color: var(--ink-soft); }
 .rail .ticks span { position: absolute; left: 0.4rem; transform: translateY(-50%); }
 .rail .ticks span:first-child { transform: none; }
@@ -237,6 +240,11 @@ article.post .by { font-family: var(--label); font-size: 0.8125rem; color: var(-
   background: radial-gradient(ellipse at 50% 40%, var(--stage) 0 30%, var(--stage-edge) 100%);
 }
 .monolith .stage canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+/* the model fades in once it's ready (see js/soil3d.js), and changed text fades up */
+.monolith .stage canvas { opacity: 0; transition: opacity 400ms ease-out; }
+.monolith-section.is-ready .stage canvas { opacity: 1; }
+@keyframes fresh { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.is-new { animation: fresh 240ms ease-out; }
 .monolith .stage canvas:active { cursor: grabbing; }
 .monolith .stage-note { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; max-width: none; font-family: var(--label); font-size: 0.875rem; color: var(--stage-ink); }
 .monolith .bar { grid-column: 1; display: flex; flex-wrap: wrap; gap: 0.5rem; }
@@ -275,11 +283,12 @@ article.post .by { font-family: var(--label); font-size: 0.8125rem; color: var(-
 .history .history-text { font-family: var(--read); font-size: 1rem; margin-bottom: 0.35rem; }
 .history .history-source { font-size: 0.75rem; color: var(--ink-soft); margin-bottom: 0.9rem; }
 .history .timeline { position: relative; height: 2.6rem; margin: 0 0.5rem 0.4rem; }
-.history .track { position: absolute; left: 0; right: 0; top: 0.7rem; height: 3px; background: var(--rule); --done: 0%; }
-.history .track::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: var(--done); background: var(--water); transition: width 600ms ease-out; }
+.history .track { position: absolute; left: 0; right: 0; top: 0.7rem; height: 3px; background: var(--rule); --done: 0; }
+.history .track::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--water); transform: scaleX(var(--done)); transform-origin: left center; transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1); }
 .history .ticks button {
   position: absolute; top: 0.32rem; width: 0.85rem; height: 0.85rem; margin-left: -0.425rem; padding: 0;
   border-radius: 50%; border: 2px solid var(--rule); background: var(--ground); cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), background-color 200ms ease-out, border-color 200ms ease-out;
 }
 .history .ticks button.is-past { border-color: var(--water); background: var(--water); }
 .history .ticks button.is-on { border-color: var(--ink); background: var(--water); transform: scale(1.35); }
@@ -375,8 +384,10 @@ details.history-list small { color: var(--ink-soft); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .is-new { animation: none; }
+  .monolith .stage canvas { transition: none; }
   .rail .core { animation: none; }
-  .cores a.col .core, .core .hz, table.drocts tbody tr, .monolith .bar button, .history .track::after { transition: none; }
+  .cores a.col .core, .cores a.col::before, .core .hz, table.drocts tbody tr, .monolith .bar button, .history .track::after, .history .ticks button { transition: none; }
 }
 
 @media print {

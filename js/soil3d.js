@@ -950,7 +950,8 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
     mesh.position.y = y;
     mesh.userData = {
       name: hz.name, y: y, h: h, i: i,
-      now: { lift: 0, off: 0, dim: 1, grow: 1, mix: 1 }, goal: { lift: 0, off: 0, dim: 1, grow: 1, mix: 1 }
+      now: { lift: 0, off: 0, dim: 1, grow: 1, mix: 1 }, goal: { lift: 0, off: 0, dim: 1, grow: 1, mix: 1 },
+      vel: { lift: 0, off: 0, grow: 0 }
     };
     model.add(mesh);
     return mesh;
@@ -1033,18 +1034,30 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
     dirty = true;
   }
 
-  /* selection */
-  let selected = null, dirty = true;
-  function select(name, fromPage) {
-    selected = slabs.some((m) => m.userData.name === name) ? name : null;
-    slabs.forEach((m) => {
-      const on = m.userData.name === selected;
-      m.userData.goal.lift = on ? T * 0.45 : 0;
-      m.userData.goal.dim = selected && !on ? 0.55 : 1;
-    });
-    fillCard(card, soil, table, osd, selected);
-    if (!fromPage) page.show(selected);
+  /* selection and hover */
+  let selected = null, hovered = null, dirty = true;
+  // Changed text fades up (the .is-new animation in css/site.css), showing what just updated.
+  const refresh = (el) => { if (!el) return; el.classList.remove("is-new"); void el.offsetWidth; el.classList.add("is-new"); };
+  function setLifts() {
+    for (let i = 0; i < slabs.length; i++) {
+      const u = slabs[i].userData;
+      u.goal.lift = u.name === selected ? T * 0.45 : u.name === hovered && !historyOn ? T * 0.12 : 0;
+      u.goal.dim = selected && u.name !== selected ? 0.55 : 1;
+    }
     dirty = true;
+  }
+  function select(name, fromPage) {
+    const before = selected;
+    selected = slabs.some((m) => m.userData.name === name) ? name : null;
+    setLifts();
+    fillCard(card, soil, table, osd, selected);
+    if (selected !== before) refresh(card);
+    if (!fromPage) page.show(selected);
+  }
+  function setHover(name) {
+    if (name === hovered) return;
+    hovered = name;
+    setLifts();
   }
   function setExploded(on) {
     exploded = on;
@@ -1167,8 +1180,13 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
       play();
     });
   }
+  let shownStage = -1;
   function showStage() {
     const st = history[stageIndex];
+    if (shownStage !== stageIndex) {
+      shownStage = stageIndex;
+      ["[data-when]", "[data-title]", "[data-text]"].forEach((sel) => refresh(panel.querySelector(sel)));
+    }
     panel.querySelector("[data-count]").textContent = "Stage " + (stageIndex + 1) + " of " + history.length + " ·";
     panel.querySelector("[data-when]").textContent = st.when;
     panel.querySelector("[data-title]").textContent = st.title;
@@ -1178,7 +1196,7 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
       b.classList.toggle("is-on", i === stageIndex);
       b.classList.toggle("is-past", i < stageIndex);
     });
-    panel.querySelector(".track").style.setProperty("--done", (along(stageIndex) * 100).toFixed(2) + "%");
+    panel.querySelector(".track").style.setProperty("--done", along(stageIndex).toFixed(3));
     panel.querySelector("[data-prev]").disabled = stageIndex === 0;
     panel.querySelector("[data-next]").disabled = stageIndex === history.length - 1;
     panel.querySelector("[data-play]").textContent = playing ? "Pause" : stageIndex === history.length - 1 ? "Replay" : "Play";
@@ -1209,6 +1227,7 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
   function enterHistory() {
     prepareHistory();
     historyOn = true;
+    hovered = null;
     select(null, false);
     if (exploded) { setExploded(false); explodeBtn.setAttribute("aria-pressed", "false"); }
     explodeBtn.disabled = true;
@@ -1223,6 +1242,7 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
       const n = m.userData.now, g = m.userData.goal;
       n.grow = g.grow;
       n.mix = g.mix;
+      m.userData.vel.grow = 0;
       drawMix(m, n.mix);
       place(m);
     });
@@ -1238,6 +1258,7 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
       const n = m.userData.now, g = m.userData.goal;
       n.grow = g.grow = 1;
       n.mix = g.mix = 1;
+      m.userData.vel.grow = 0;
       place(m);
     });
     useHistoryMaps(false);
@@ -1252,33 +1273,55 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
 
   /* animation */
   const settle = (now, goal, k) => (Math.abs(goal - now) < 0.01 ? goal : now + (goal - now) * k);
+  // A damped spring for movement: it keeps its speed when a new target interrupts it.
+  // omega sets the speed; zeta 1 settles without overshoot, below 1 overshoots slightly.
+  function spring(n, v, key, goal, dt, omega, zeta) {
+    let x = n[key], vel = v[key];
+    for (let t = dt; t > 1e-6; t -= 1 / 120) {
+      const h = t < 1 / 120 ? t : 1 / 120;
+      vel += (-omega * omega * (x - goal) - 2 * zeta * omega * vel) * h;
+      x += vel * h;
+    }
+    if (Math.abs(x - goal) < 0.01 && Math.abs(vel) < 0.01) { x = goal; vel = 0; }
+    n[key] = x;
+    v[key] = vel;
+  }
+  const toCamera = new THREE.Vector3();
   function step(dt) {
-    const k = reduceMotion.matches ? 1 : 1 - Math.exp(-dt * 9);
-    const kGrow = reduceMotion.matches ? 1 : 1 - Math.exp(-dt * 2.6);
-    const kMix = reduceMotion.matches ? 1 : 1 - Math.exp(-dt * 1.8);
+    const reduce = reduceMotion.matches;
+    const k = reduce ? 1 : 1 - Math.exp(-dt * 9);
+    const kMix = reduce ? 1 : 1 - Math.exp(-dt * 1.8);
     let busy = false;
-    slabs.forEach((m) => {
-      const u = m.userData, n = u.now, g = u.goal;
-      if (n.lift === g.lift && n.off === g.off && n.dim === g.dim && n.grow === g.grow && n.mix === g.mix) return;
-      n.lift = settle(n.lift, g.lift, k);
-      n.off = settle(n.off, g.off, k);
-      n.dim = settle(n.dim, g.dim, k);
-      n.grow = settle(n.grow, g.grow, kGrow);
+    for (let i = 0; i < slabs.length; i++) {
+      const m = slabs[i], u = m.userData, n = u.now, g = u.goal, v = u.vel;
+      if (n.lift === g.lift && n.off === g.off && n.dim === g.dim && n.grow === g.grow && n.mix === g.mix &&
+          v.lift === 0 && v.off === 0 && v.grow === 0) continue;
+      if (reduce) {
+        n.lift = g.lift; n.off = g.off; n.grow = g.grow;
+        v.lift = 0; v.off = 0; v.grow = 0;
+      } else {
+        spring(n, v, "lift", g.lift, dt, 16, 0.72);
+        spring(n, v, "off", g.off, dt, 11, 0.8);
+        spring(n, v, "grow", g.grow, dt, 7, 1);
+      }
+      if (n.dim !== g.dim) {
+        n.dim = settle(n.dim, g.dim, k);
+        for (let j = 0; j < m.material.length; j++) m.material[j].color.copy(m.material[j].userData.base).multiplyScalar(n.dim);
+      }
       if (n.mix !== g.mix) {
         n.mix = settle(n.mix, g.mix, kMix);
         // Repainting is the costly part, so only when the blend has visibly moved.
         if (u.mix && (Math.abs(n.mix - u.mix.drawn) > 0.08 || n.mix === g.mix)) drawMix(m, n.mix);
       }
       place(m);
-      m.material.forEach((mat) => { mat.color.copy(mat.userData.base).multiplyScalar(n.dim); });
       busy = true;
-    });
+    }
     const low = slabs[slabs.length - 1];
     plinth.position.y = -D / 2 - 1.25 + low.userData.now.off;
     if (dolly !== null) {
-      const dir = camera.position.clone().sub(controls.target);
-      const d = dir.length(), next = settle(d, dolly, k);
-      camera.position.copy(controls.target).add(dir.setLength(next));
+      toCamera.copy(camera.position).sub(controls.target);
+      const next = settle(toCamera.length(), dolly, k);
+      camera.position.copy(controls.target).add(toCamera.setLength(next));
       if (next === dolly) dolly = null;
       busy = true;
     }
@@ -1325,10 +1368,28 @@ async function buildModel(section, soil, table, osd, history, page, pending) {
     const name = hit(e);
     select(name && name === selected ? null : name, false);
   });
+  let lastMove = null, moveQueued = false;
   canvas.addEventListener("pointermove", (e) => {
-    if (e.pointerType === "mouse" && !e.buttons) canvas.style.cursor = hit(e) ? "pointer" : "grab";
+    if (e.pointerType !== "mouse" || e.buttons) return;
+    lastMove = e;
+    if (moveQueued) return;
+    moveQueued = true;
+    requestAnimationFrame(() => {
+      moveQueued = false;
+      const name = hit(lastMove);
+      canvas.style.cursor = name ? "pointer" : "grab";
+      if (historyOn || name === hovered) return;
+      setHover(name);
+      page.show(name || selected);
+    });
+  });
+  canvas.addEventListener("pointerleave", () => {
+    if (hovered === null) return;
+    setHover(null);
+    if (!historyOn) page.show(selected);
   });
   document.addEventListener("soil:pick", (e) => { if (!historyOn) select(e.detail, true); });
+  document.addEventListener("soil:hover", (e) => { if (!historyOn) setHover(e.detail); });
 
   /* buttons */
   const explodeBtn = section.querySelector("[data-explode]");

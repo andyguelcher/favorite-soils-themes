@@ -411,9 +411,13 @@
         show(name);
         document.dispatchEvent(new CustomEvent("soil:pick", { detail: name }));
       }
+      // Hovering a band or row lights up the same horizon in the 3D model (js/soil3d.js).
+      function hover(name) { document.dispatchEvent(new CustomEvent("soil:hover", { detail: name })); }
       core.querySelectorAll(".hz").forEach(function (el) {
-        el.addEventListener("mouseenter", function () { show(el.dataset.hz); });
-        el.addEventListener("focus", function () { show(el.dataset.hz); });
+        el.addEventListener("mouseenter", function () { show(el.dataset.hz); hover(el.dataset.hz); });
+        el.addEventListener("mouseleave", function () { hover(null); });
+        el.addEventListener("focus", function () { show(el.dataset.hz); hover(el.dataset.hz); });
+        el.addEventListener("blur", function () { hover(null); });
         el.addEventListener("click", function () {
           pick(el.dataset.hz);
           var row = document.querySelector('tr[data-hz="' + el.dataset.hz + '"]');
@@ -421,7 +425,8 @@
         });
       });
       rows.forEach(function (r) {
-        r.addEventListener("mouseenter", function () { show(r.dataset.hz); });
+        r.addEventListener("mouseenter", function () { show(r.dataset.hz); hover(r.dataset.hz); });
+        r.addEventListener("mouseleave", function () { hover(null); });
         r.addEventListener("click", function () { pick(r.dataset.hz); });
       });
       show(null);
